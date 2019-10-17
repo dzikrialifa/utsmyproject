@@ -3,7 +3,6 @@ package org.android.dzik.mytshirt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +11,9 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.android.dzik.mytshirt.fragments.AddDataFragment;
-import org.android.dzik.mytshirt.fragments.BukuFragment;
-import org.android.dzik.mytshirt.fragments.DiscountFragment;
-import org.android.dzik.mytshirt.fragments.FoodFragment;
 import org.android.dzik.mytshirt.fragments.HomeFragment;
 import org.android.dzik.mytshirt.fragments.MovieFragment;
+import org.android.dzik.mytshirt.fragments.TiketIndexFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -50,11 +46,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.action_home:
                 fragment = new HomeFragment();
                 break;
-            case R.id.action_buku:
-                fragment = new BukuFragment();
+            case R.id.action_film:
+                fragment = new MovieFragment();
                 break;
             case R.id.action_akun:
-                fragment = new AddDataFragment();
+                fragment = new TiketIndexFragment();
                 break;
         }
         return loadFragment(fragment);

@@ -6,11 +6,17 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import org.android.dzik.mytshirt.R;
+import org.android.dzik.mytshirt.sum.SumSewa;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,15 +37,48 @@ public class TiketIndexFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tiket_index, container, false);
+//        return inflater.inflate(R.layout.fragment_tiket_index, container, false);
+        View view = inflater.inflate(R.layout.fragment_tiket_index,container,false);
+
+        final RadioGroup groupDuduk = view.findViewById(R.id.group_tempatduduk);
+        final EditText pemesanText = view.findViewById(R.id.input_pemesan);
+        final EditText dewasaText = view.findViewById(R.id.input_dewasa);
+        final EditText anakText = view.findViewById(R.id.input_anak);
+        Button hitungButton = view.findViewById(R.id.button_checkout);
+
+        hitungButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    String jumlahDewasa = dewasaText.getText().toString();
+                    String jumlahAnak = anakText.getText().toString();
+
+                    int checkedId = groupDuduk.getCheckedRadioButtonId();
+                    if ((checkedId != -1) && !TextUtils.isEmpty(jumlahAnak) && !TextUtils.isEmpty(jumlahDewasa)){
+                        int hDewasa = Integer.parseInt(jumlahDewasa);
+                        int hAnak = Integer.parseInt(jumlahAnak);
+//                        int tipeDuduk = (checkedId == R.id.radio_reguler) ? SumSewa.REGULER "(checkedId == R.id.radio_sweet) ? SumSewa.SWEET : SumSewa.SWEET;
+                        int tipeDuduk = (checkedId == R.id.radio_reguler) ? SumSewa.REGULER :
+                                        (checkedId == R.id.radio_sweet) ? SumSewa.SWEET : SumSewa.FAMILY;
+                        SumSewa sumSewa = new SumSewa(hAnak,hDewasa,tipeDuduk);
+                        mListener.onCalculateTicket(sumSewa.getIndex());
+                    }else{
+                        Toast.makeText(getActivity(),"Please select gender and input your height",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -47,8 +86,8 @@ public class TiketIndexFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -70,6 +109,7 @@ public class TiketIndexFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+//        void onFragmentInteraction(Uri uri);
+        void onCalculateTicket(int index);
     }
 }

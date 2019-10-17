@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_home"
         android:title="Home" />
-    <item android:id="@+id/action_buku"
-        android:title="List Buku" />
+    <item android:id="@+id/action_film"
+        android:title="List Film" />
     <item android:id="@+id/action_akun"
         android:title="Add Data"/>
 </menu>

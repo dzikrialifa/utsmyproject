@@ -71,7 +71,7 @@
             android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/text_username"
+                android:id="@+id/text_pemesan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
@@ -87,7 +87,7 @@
                 android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/text_fullname"
+                android:id="@+id/text_jumlahdewasa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
@@ -103,7 +103,7 @@
                 android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/text_gender"
+                android:id="@+id/text_jumlahanak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
@@ -119,7 +119,7 @@
                 android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/text_address"
+                android:id="@+id/text_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
@@ -138,7 +138,7 @@
                 android:textColor="@android:color/black" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/button_checkout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
