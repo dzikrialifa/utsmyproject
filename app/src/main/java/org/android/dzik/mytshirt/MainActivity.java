@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.android.dzik.mytshirt.fragments.HasilFragment;
 import org.android.dzik.mytshirt.fragments.HomeFragment;
+import org.android.dzik.mytshirt.fragments.MovieFragment;
 import org.android.dzik.mytshirt.fragments.TicketIndexFragment;
 import org.android.dzik.mytshirt.sum.SumSewa;
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements
                 fragment = new HomeFragment();
                 break;
             case R.id.action_film:
-                fragment = new HasilFragment();
+                fragment = new MovieFragment();
                 break;
             case R.id.action_akun:
                 fragment = new TicketIndexFragment();
