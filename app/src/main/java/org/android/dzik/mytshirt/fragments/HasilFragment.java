@@ -9,37 +9,49 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import org.android.dzik.mytshirt.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AddDataFragment.OnFragmentInteractionListener} interface
+ * {@link HasilFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class AddDataFragment extends Fragment {
-
+public class HasilFragment extends Fragment {
+    String informasi;
     private OnFragmentInteractionListener mListener;
 
-    public AddDataFragment() {
+    public HasilFragment() {
         // Required empty public constructor
     }
 
+    public void setInformasi(String informasi) {
+        this.informasi = informasi;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tiket_index, container, false);
+        View view = inflater.inflate(R.layout.fragment_hasil,container,false);
+        TextView infotext = view.findViewById(R.id.text_informasi);
+        infotext.setText(informasi);
+        Button tryagain = view.findViewById(R.id.button_tryagain);
+        tryagain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null){
+                    mListener.onTryAgain("TicketIndex");
+                }
+            }
+        });return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -47,8 +59,8 @@ public class AddDataFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -57,6 +69,7 @@ public class AddDataFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -70,6 +83,7 @@ public class AddDataFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+//        void onFragmentInteraction(Uri uri);
+        void onTryAgain(String tag);
     }
 }

@@ -21,14 +21,14 @@ import org.android.dzik.mytshirt.sum.SumSewa;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TiketIndexFragment.OnFragmentInteractionListener} interface
+ * {@link TicketIndexFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class TiketIndexFragment extends Fragment {
+public class TicketIndexFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TiketIndexFragment() {
+    public TicketIndexFragment() {
         // Required empty public constructor
     }
 
@@ -37,48 +37,41 @@ public class TiketIndexFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_tiket_index, container, false);
-        View view = inflater.inflate(R.layout.fragment_tiket_index,container,false);
-
-        final RadioGroup groupDuduk = view.findViewById(R.id.group_tempatduduk);
-        final EditText pemesanText = view.findViewById(R.id.input_pemesan);
+        View view = inflater.inflate(R.layout.fragment_ticket_index,container,false);
+        final RadioGroup seatGroup = view.findViewById(R.id.group_tempatduduk);
         final EditText dewasaText = view.findViewById(R.id.input_dewasa);
         final EditText anakText = view.findViewById(R.id.input_anak);
-        Button hitungButton = view.findViewById(R.id.button_checkout);
-
-        hitungButton.setOnClickListener(new View.OnClickListener() {
+        Button checkoutBtn = view.findViewById(R.id.button_checkout);
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
-                    String jumlahDewasa = dewasaText.getText().toString();
-                    String jumlahAnak = anakText.getText().toString();
-
-                    int checkedId = groupDuduk.getCheckedRadioButtonId();
-                    if ((checkedId != -1) && !TextUtils.isEmpty(jumlahAnak) && !TextUtils.isEmpty(jumlahDewasa)){
-                        int hDewasa = Integer.parseInt(jumlahDewasa);
-                        int hAnak = Integer.parseInt(jumlahAnak);
-//                        int tipeDuduk = (checkedId == R.id.radio_reguler) ? SumSewa.REGULER "(checkedId == R.id.radio_sweet) ? SumSewa.SWEET : SumSewa.SWEET;
-                        int tipeDuduk = (checkedId == R.id.radio_reguler) ? SumSewa.REGULER :
-                                        (checkedId == R.id.radio_sweet) ? SumSewa.SWEET : SumSewa.FAMILY;
-                        SumSewa sumSewa = new SumSewa(hAnak,hDewasa,tipeDuduk);
-                        mListener.onCalculateTicket(sumSewa.getIndex());
+                    String dewasaString = dewasaText.getText().toString();
+                    String anakString = anakText.getText().toString();
+                    int checkedId = seatGroup.getCheckedRadioButtonId();
+                    if ((checkedId != -1) && !TextUtils.isEmpty(dewasaString) && !TextUtils.isEmpty(anakString)){
+                        int dewasa = Integer.parseInt(dewasaString);
+                        int anak = Integer.parseInt(anakString);
+                        int seat = (checkedId== R.id.radio_reguler) ? SumSewa.REGULER :
+                                (checkedId==R.id.radio_sweet) ? SumSewa.SWEET :
+                                        SumSewa.FAMILY;
+                        SumSewa sumSewa = new SumSewa(anak,dewasa,seat);
+//                        sumSewa.setAnak(anak);
+//                        sumSewa.setDewasa(dewasa);
+//                        sumSewa.setSeat(checkedId);
+                        mListener.onCalculateTiket(sumSewa.getIndex());
                     }else{
-                        Toast.makeText(getActivity(),"Please select gender and input your height",
+                        Toast.makeText(getActivity(),"Please fill amount adult,child and SEAT",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -86,8 +79,8 @@ public class TiketIndexFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -109,7 +102,8 @@ public class TiketIndexFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-        void onCalculateTicket(int index);
+        void onCalculateTiket(int index);
+//        void onHitung(int total);
+//        void onTicketIndexButtonClicked();
     }
 }

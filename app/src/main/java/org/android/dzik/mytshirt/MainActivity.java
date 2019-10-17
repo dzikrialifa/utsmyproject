@@ -4,27 +4,37 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.android.dzik.mytshirt.fragments.HasilFragment;
 import org.android.dzik.mytshirt.fragments.HomeFragment;
-import org.android.dzik.mytshirt.fragments.MovieFragment;
-import org.android.dzik.mytshirt.fragments.TiketIndexFragment;
+import org.android.dzik.mytshirt.fragments.TicketIndexFragment;
+import org.android.dzik.mytshirt.sum.SumSewa;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements
+        TicketIndexFragment.OnFragmentInteractionListener,
+        HasilFragment.OnFragmentInteractionListener,
+        BottomNavigationView.OnNavigationItemSelectedListener {
+
+    // Deklarasikan atribut Fragment di sini
+    private SumSewa sumSewa;
+    private HasilFragment hasilFragment;
+    private TicketIndexFragment ticketIndexFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ticketIndexFragment = new TicketIndexFragment();
+        hasilFragment = new HasilFragment();
         loadFragment(new HomeFragment());
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         // beri listener pada saat item/menu bottomnavigation terpilih
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -47,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new HomeFragment();
                 break;
             case R.id.action_film:
-                fragment = new MovieFragment();
+                fragment = new HasilFragment();
                 break;
             case R.id.action_akun:
-                fragment = new TiketIndexFragment();
+                fragment = new TicketIndexFragment();
                 break;
         }
         return loadFragment(fragment);
@@ -61,8 +71,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    public void kembali(View view) {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+    @Override
+    public void onCalculateTiket(int index) {
+        hasilFragment.setInformasi(String.format(" "+index));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container,hasilFragment).commit();
+    }
+
+    @Override
+    public void onTryAgain(String tag) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, ticketIndexFragment)
+                .commit();
     }
 }

@@ -5,5 +5,5 @@
     <item android:id="@+id/action_film"
         android:title="List Film" />
     <item android:id="@+id/action_akun"
-        android:title="Add Data"/>
+        android:title="Booking"/>
 </menu>
